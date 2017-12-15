@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
-import Trash from 'material-ui-icons/DeleteForever';
+
+import {
+    ListItem,
+    ListItemSecondaryAction,
+    ListItemText
+} from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from 'material-ui-icons/Delete';
+
+
 
 
 const style = {
@@ -29,12 +38,21 @@ class Task extends Component {
     render() {
         return (
             <div className='taskDiv'>
-              <input type = "checkbox" onChange = {this.handleChange}/>
-              <span style = {this.state.checked ? style.checked : style.unChecked}> {this.props.label} </span>
-              <Trash className='trash' onClick = {(event) => {
-                  this.props.delTask(this.props.index);
-                  event.stopPropagation();
-              }}/>
+
+              <ListItem button>
+
+                <input type = "checkbox" onClick = {this.handleChange}/>
+                <ListItemText style = {this.state.checked ? style.checked : style.unChecked} primary={this.props.label}/>
+                <ListItemSecondaryAction>
+                  <IconButton aria-label="Delete">
+                    <DeleteIcon onClick = {(event) => {
+                        this.props.delTask(this.props.index);
+                        event.stopPropagation();
+                    }}/>
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+
             </div>
         )
     }

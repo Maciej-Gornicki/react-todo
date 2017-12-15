@@ -1,3 +1,29 @@
 .trash {
   cursor: pointer;
 }
+
+#root>div {
+  width: 100%;
+  max-width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  box-shadow: 5px 5px 10px black;
+  border-radius: 10px;
+  padding: 20px 20px 20px 20px;
+}
+
+#root>div>div:nth-child(2) {
+  height: 100%;
+}
+
+.List {
+  overflow-y: auto;
+  height: 73%;
+}
+
+h2 {
+  text-align: center;
+}
