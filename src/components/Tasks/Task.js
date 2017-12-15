@@ -1,50 +1,43 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import Trash from 'material-ui-icons/DeleteForever';
+
 
 const style = {
-  checked: {
-    textDecoration: 'line-through'
-  },
-  unChecked: {
-    color: 'green'
-  }
+    checked: {
+        textDecoration: 'line-through'
+    },
+    unChecked: {
+        color: 'green'
+    }
 }
 
 class Task extends Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      checked: false
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.state = {
+            checked: false,
+        }
     }
-  }
 
-  // renderLabel() {
-  //   if (this.state.checked) {
-  //     return (
-  //       <span style={{textDecoration: 'line-through'}}>
-  //         {this.props.label}
-  //       </span>
-  //     );
-  //   }
-  //   return this.props.label;
-  // }
+    handleChange(event) {
+        this.setState({
+            checked: event.target.checked
+        });
+    }
 
-  handleChange(event) {
-    this.setState({ checked: event.target.checked });
-  }
-
-  render() {
-    return(
-      <div>
-        <input type="checkbox" onChange={this.handleChange} />
-        <span
-          style={this.state.checked ? style.checked : style.unChecked}
-        >
-          {this.props.label}
-        </span>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className='taskDiv'>
+              <input type = "checkbox" onChange = {this.handleChange}/>
+              <span style = {this.state.checked ? style.checked : style.unChecked}> {this.props.label} </span>
+              <Trash className='trash' onClick = {(event) => {
+                  this.props.delTask(this.props.index);
+                  event.stopPropagation();
+              }}/>
+            </div>
+        )
+    }
 }
 
 export default Task;

@@ -3,56 +3,65 @@ import TasksList from './TasksList';
 
 class Container extends Component {
 
-  constructor(props) {
-    super(props);
-    this.textChanged = this.textChanged.bind(this);
-    this.searchChanged = this.searchChanged.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {
-      query: '',
-      task: '',
-      tasks: []
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.textChanged = this.textChanged.bind(this);
+        this.searchChanged = this.searchChanged.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
-  textChanged(event) {
-    this.setState({task: event.target.value});
-  }
+        this.state = {
+            query: '',
+            task: '',
+            tasks: [],
+            delTask: (index) => {
+                let tasks = this.state.tasks;
+                tasks.splice(index, 1);
+                this.setState({
+                    tasks
+                })
+            }
+        };
+    }
 
-  searchChanged(event) {
-    this.setState({query: event.target.value});
-  }
+    textChanged(event) {
+        this.setState({task: event.target.value});
+    }
 
-  handleSubmit(event) {
-    this.setState({
-      tasks: this.state.tasks.concat(this.state.task),
-      task: ''
-    });
-    event.preventDefault();
-  }
+    searchChanged(event) {
+        this.setState({query: event.target.value});
+    }
 
-  render() {
-    return (
-      <div>
-        <input type="text" placeholder="Search..." onChange={this.searchChanged} />
+    handleSubmit(event) {
+        this.setState({
+            tasks: this.state.tasks.concat(this.state.task),
+            task: ''
+        });
+        event.preventDefault();
+    }
 
-        <form onSubmit={this.handleSubmit}>
-          <input type="text"
-                 value={this.state.task}
-                 placeholder="Add task..."
-                 onChange={this.textChanged}/>
-          <input type="submit" value="Add"/>
-        </form>
+    render() {
+        return (
+            <div>
+              <input type="text" placeholder="Search..." onChange={this.searchChanged} />
 
-        <h2>My tasks</h2>
-        <TasksList
-          query={this.state.query}
-          tasks={this.state.tasks}
-        />
+              <form onSubmit={this.handleSubmit}>
+                <input type="text"
+                       value={this.state.task}
+                       placeholder="Add task..."
+                       onChange={this.textChanged}/>
+                <input type="submit" value="Add"/>
+              </form>
 
-      </div>
-    );
-  }
+              <h2>My tasks</h2>
+              <TasksList
+                  query={this.state.query}
+                  tasks={this.state.tasks}
+                  delTask={this.state.delTask}
+              />
+
+            </div>
+        );
+    }
 }
 
-export default Container
+export default Container;
